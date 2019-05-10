@@ -1,0 +1,40 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -o-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.container {
+    max-width: 900px;
+    width: 100%;
+    margin: 100 auto;
+    position: relative;
+  }
+
+  #contact {
+    background: #F9F9F9;
+    padding: 25px;
+    margin: 50px 0;
+    margin-left: 50px;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  }
+agm-map {
+    height: 400px;
+    width: 650px;
+  }
+  
+  
+  * {
+    font-family: Lato;
+  }
+  
+  a {
+    color: darkblue;
+  }

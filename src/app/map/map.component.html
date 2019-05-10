@@ -1,0 +1,40 @@
+<div *ngIf="mapActive" class="container" id="contact">
+  <h2>Select your preffered shop!</h2>
+  <h1>Print Shops nearby you</h1>
+  <br>
+  
+  <agm-map 
+    [latitude]="lat"
+    [longitude]="lng"
+    [zoom]="zoom"
+    [disableDefaultUI]="false"
+    [zoomControl]="false"
+    (mapClick)="mapClicked($event)">
+  
+    <agm-marker 
+        *ngFor="let m of markers; let i = index"
+        (markerClick)="clickedMarker(m.label, i)"
+        [latitude]="m.lat"
+        [longitude]="m.lng"
+        [label]="m.label"
+        [markerDraggable]="m.draggable"
+        (dragEnd)="markerDragEnd(m, $event)">
+        
+      <agm-info-window>
+        <strong>{{m.address}}</strong>
+      </agm-info-window>
+      
+    </agm-marker>
+    
+    <agm-circle [latitude]="lat + 0.3" [longitude]="lng" 
+        [radius]="5000"
+        [fillColor]="'red'"
+        [circleDraggable]="true"
+        [editable]="true">
+    </agm-circle>
+  
+  </agm-map>
+
+
+
+</div>

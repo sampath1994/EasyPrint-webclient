@@ -1,0 +1,56 @@
+<div [class.aParent]="buttonState===true">
+<div class="container">  
+  <form id="contact" action="" method="post">
+    <h3>Print Settings</h3>
+    <h4>Fill out print prferences</h4>
+    <fieldset>
+      <input placeholder="Preferable Document name" type="text" tabindex="1" required autofocus>
+    </fieldset>
+    <fieldset>
+        <select>
+            <option value="" disabled selected>Printer Type</option>
+            <option value="saab">Lazer</option>
+            <option value="opel">Inkjet</option>
+        </select>
+    </fieldset>
+    <fieldset>
+        <select>
+            <option value="" disabled selected>Color profile</option>          
+            <option value="saab">Black & White</option>
+            <option value="opel">Colored</option>
+        </select>
+    </fieldset>
+    <fieldset>
+      <select >
+          <option value="" disabled selected>Orientation</option>
+  <option value="volvo">Horizontal</option>
+  <option value="saab">Vertical</option>
+      </select>
+    </fieldset>
+    <fieldset>
+        <select >
+            <option value="" disabled selected>No. of copies</option>
+    <option value="volvo">1</option>
+    <option value="saab">2</option>
+    <option value="saab">3</option>
+        </select>
+      </fieldset>
+    <fieldset>
+      <textarea placeholder="Print finalization preferences ex: Spiral bindind , Hard cover" tabindex="5" required></textarea>
+    </fieldset>
+    <fieldset>
+        <button (click)="clicked()"  name="submit" type=button id="contact-submit" data-submit="...Sending">Choose Shop</button>
+      </fieldset>
+      <fieldset><p>selected shop: {{shopName}}</p></fieldset>
+    <fieldset>
+      <button  name="submit"  id="contact-submit" data-submit="...Sending">Submit</button>
+    </fieldset>
+    <p class="copyright">Designed by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a></p>
+  </form>
+
+ 
+</div>
+<div>
+ <app-map (selectedShop)="showSelectedShop($event)" [mapActive]="buttonState" [lat]="lat" [lng]="lng"></app-map>
+  </div>
+  </div>
