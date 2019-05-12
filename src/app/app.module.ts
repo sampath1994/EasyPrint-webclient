@@ -17,7 +17,7 @@ import { AgmCoreModule } from '@agm/core';
     BrowserModule,
     AppRoutingModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCw3UUAMrndVhq3TzkaRxJiKoCO_HP26w8'
+      apiKey: ''
       /* apiKey is required, unless you are a 
       premium customer, in which case you can 
       use clientId 
