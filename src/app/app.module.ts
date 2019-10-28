@@ -8,6 +8,20 @@ import { MapComponent } from './map/map.component';
 import { AgmCoreModule } from '@agm/core';
 import { PrintshopComponent } from './printshop/printshop.component';
 import { UserviewComponent } from './userview/userview.component';
+import { LoginComponent } from './login/login.component';
+import {AuthenticationService} from './authentication.service';
+import {AlertService} from './alert.service';
+
+import { ReactiveFormsModule }    from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AlertComponent } from './alert/alert.component';
+import { ErrorInterceptor } from '../helpers/error.interceptor';
+import { JwtInterceptor } from '../helpers/jwt.interceptor';
+import { AuthGuard } from './auth.guard';
+import { RegisterComponent } from './register/register.component';
+
+// used to create fake backend
+import { fakeBackendProvider } from '../helpers/fake-backend';
 
 @NgModule({
   declarations: [
@@ -15,11 +29,16 @@ import { UserviewComponent } from './userview/userview.component';
     PrintComponent,
     MapComponent,
     PrintshopComponent,
-    UserviewComponent
+    UserviewComponent,
+    LoginComponent,
+    AlertComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     AgmCoreModule.forRoot({
       apiKey: ''
       /* apiKey is required, unless you are a 
@@ -28,7 +47,15 @@ import { UserviewComponent } from './userview/userview.component';
       */
     })
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    AlertService,
+    AuthenticationService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    // provider used to create fake backend
+    fakeBackendProvider
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
