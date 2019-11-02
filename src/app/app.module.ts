@@ -19,7 +19,7 @@ import { ErrorInterceptor } from '../helpers/error.interceptor';
 import { JwtInterceptor } from '../helpers/jwt.interceptor';
 import { AuthGuard } from './auth.guard';
 import { RegisterComponent } from './register/register.component';
-
+import { key } from '../secret/api_key';
 // used to create fake backend
 import { fakeBackendProvider } from '../helpers/fake-backend';
 
@@ -40,7 +40,7 @@ import { fakeBackendProvider } from '../helpers/fake-backend';
     ReactiveFormsModule,
     HttpClientModule,
     AgmCoreModule.forRoot({
-      apiKey: ''
+      apiKey: `${key}`   //'AIzaSyCw3UUAMrndVhq3TzkaRxJiKoCO_HP26w8'
       /* apiKey is required, unless you are a 
       premium customer, in which case you can 
       use clientId 
