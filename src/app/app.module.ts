@@ -40,7 +40,7 @@ import { fakeBackendProvider } from '../helpers/fake-backend';
     ReactiveFormsModule,
     HttpClientModule,
     AgmCoreModule.forRoot({
-      apiKey: `${key}`   //'AIzaSyCw3UUAMrndVhq3TzkaRxJiKoCO_HP26w8'
+      apiKey: `${key}` 
       /* apiKey is required, unless you are a 
       premium customer, in which case you can 
       use clientId 
