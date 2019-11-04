@@ -1,0 +1,24 @@
+<p>
+  live-panel works!
+</p>
+<div>
+<ul>
+<li *ngFor="let job of printjobs">
+<button class='btn btn-primary btn-lg' (click)="openModal('custom-modal-2')">{{job.username}}</button>
+  </li>
+</ul>
+
+</div>
+
+
+
+<jw-modal id="custom-modal-1">
+  <h1>A Custom Modal!</h1>
+  <p></p>
+  <button (click)="closeModal('custom-modal-1');">Close</button>
+</jw-modal>
+
+<jw-modal id="custom-modal-2">
+  <h1 style="height:300px">A Tall Custom Modal!</h1>
+  <button (click)="closeModal('custom-modal-2');">Close</button>
+</jw-modal>

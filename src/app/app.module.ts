@@ -22,6 +22,9 @@ import { RegisterComponent } from './register/register.component';
 import { key } from '../secret/api_key';
 // used to create fake backend
 import { fakeBackendProvider } from '../helpers/fake-backend';
+import { LivePanelComponent } from './live-panel/live-panel.component';
+import { ModalComponent } from './directive/modal.component';
+import { ModalService } from './service/modal.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,9 @@ import { fakeBackendProvider } from '../helpers/fake-backend';
     UserviewComponent,
     LoginComponent,
     AlertComponent,
-    RegisterComponent
+    RegisterComponent,
+    LivePanelComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +50,7 @@ import { fakeBackendProvider } from '../helpers/fake-backend';
       premium customer, in which case you can 
       use clientId 
       */
-    })
+    }),
   ],
   providers: [
     AuthGuard,
@@ -54,7 +59,8 @@ import { fakeBackendProvider } from '../helpers/fake-backend';
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     // provider used to create fake backend
-    fakeBackendProvider
+    fakeBackendProvider,
+    ModalService
   ],
   bootstrap: [AppComponent]
 })
