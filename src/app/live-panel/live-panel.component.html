@@ -3,8 +3,8 @@
 </p>
 <div>
 <ul>
-<li *ngFor="let job of printjobs">
-<button class='btn btn-primary btn-lg' (click)="openModal('custom-modal-2')">{{job.username}}</button>
+<li *ngFor="let job of printjobs; index as i">
+<button class='btn btn-primary btn-lg' (click)="openModal('custom-modal-2', i)">{{job.username}}</button>
   </li>
 </ul>
 
@@ -19,6 +19,9 @@
 </jw-modal>
 
 <jw-modal id="custom-modal-2">
-  <h1 style="height:300px">A Tall Custom Modal!</h1>
+  <h1 style="height:300px">Print properties</h1>
+  <p>{{currentPrintJob.username}}</p>
+  <p>{{currentPrintJob.docname}}</p>
+  <p>{{currentPrintJob.color}}</p>
   <button (click)="closeModal('custom-modal-2');">Close</button>
 </jw-modal>

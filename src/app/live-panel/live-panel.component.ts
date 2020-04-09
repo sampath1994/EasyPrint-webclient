@@ -12,6 +12,7 @@ export class LivePanelComponent implements OnInit {
 
   private bodyText: string;
   printjobs: PrintJob[];
+  currentPrintJob: PrintJob;
 
   constructor(private modalService: ModalService) { 
     this.printjobs = [{"id":1,"username":"sam","docname":"testdoc","color":"black"},{"id":2,"username":"pro","docname":"testdoc2","color":"clr"}]
@@ -22,7 +23,8 @@ export class LivePanelComponent implements OnInit {
     this.bodyText = 'This text can be updated in modal 1';
   }
 
-  openModal(id: string) {
+  openModal(id: string, idx: number) {
+    this.currentPrintJob = this.printjobs[idx];
     this.modalService.open(id);
 }
 
