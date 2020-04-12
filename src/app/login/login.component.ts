@@ -52,7 +52,18 @@ export class LoginComponent implements OnInit {
           .pipe(first())
           .subscribe(
               data => {
-                  this.router.navigate(['/shop']);   // statically changed to /shop 
+                this.authenticationService.getMyRole().subscribe(   //.pipe(first())  //Make another http call to get the role of me
+                  user => {
+                    console.log(user.roles[0]);
+                    if(user.roles[0] == 'ROLE_CLIENT'){
+                    this.router.navigate(['/shop']);   // statically changed to /shop 
+                    }else if(user.roles[0] == 'ROLE_ADMIN'){
+                        //go to admin page
+                    }else if(user.roles[0] == 'ROLE_USER'){
+                        //go to user page
+                    }
+                  }
+                );
               },
               error => {
                   this.alertService.error(error);
