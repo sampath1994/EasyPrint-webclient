@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 
 import { AlertService} from '../alert.service';
 import { UserService } from '../user.service';
+import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-register',
@@ -26,10 +27,11 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      role: ['', Validators.required],
+      email: ['', Validators.required],
       username: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      password_conf: ['', [Validators.required, Validators.minLength(6)]]
   });
   }
 
@@ -43,9 +45,17 @@ export class RegisterComponent implements OnInit {
       if (this.registerForm.invalid) {
           return;
       }
+      
+      if(this.registerForm.value.password != this.registerForm.value.password_conf){
+        this.alertService.error("Confirm password doesn't match");
+        return;
+      }
 
       this.loading = true;
-      this.userService.register(this.registerForm.value)
+      let buff = this.registerForm.value;
+      let save_usr: User;
+      save_usr = new User(buff.username, buff.password, buff.email, [buff.role]);
+      this.userService.register(save_usr)
           .pipe(first())
           .subscribe(
               data => {
