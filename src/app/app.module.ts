@@ -25,6 +25,8 @@ import { fakeBackendProvider } from '../helpers/fake-backend';
 import { LivePanelComponent } from './live-panel/live-panel.component';
 import { ModalComponent } from './directive/modal.component';
 import { ModalService } from './service/modal.service';
+import { RoleGuard } from './role.guard';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,9 @@ import { ModalService } from './service/modal.service';
   ],
   providers: [
     AuthGuard,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService,
+    RoleGuard,
     AlertService,
     AuthenticationService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

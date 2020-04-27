@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
                     }else if(user.roles[0] == 'ROLE_ADMIN'){
                         //go to admin page
                     }else if(user.roles[0] == 'ROLE_USER'){
-                        //go to user page
+                      this.router.navigate(['/user']);
                     }
                   }
                 );
