@@ -27,6 +27,13 @@ import { ModalComponent } from './directive/modal.component';
 import { ModalService } from './service/modal.service';
 import { RoleGuard } from './role.guard';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+import { MessagingService } from './messaging.service';
+import { AsyncPipe } from '../../node_modules/@angular/common';
 
 @NgModule({
   declarations: [
@@ -53,6 +60,10 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
       use clientId 
       */
     }),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    AngularFireMessagingModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [
     AuthGuard,
@@ -65,7 +76,9 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     // provider used to create fake backend
     //fakeBackendProvider,
-    ModalService
+    ModalService,
+    MessagingService,
+    AsyncPipe
   ],
   bootstrap: [AppComponent]
 })

@@ -4,7 +4,15 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080'
+  apiUrl: 'http://localhost:8080',
+  firebase: {
+    apiKey: "",
+    authDomain: "easy-print-push.firebaseapp.com",
+    databaseURL: "https://easy-print-push.firebaseio.com",
+    projectId: "easy-print-push",
+    storageBucket: "easy-print-push.appspot.com",
+    messagingSenderId: ""
+  }
 };
 
 /*
