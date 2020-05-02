@@ -34,6 +34,7 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { MessagingService } from './messaging.service';
 import { AsyncPipe } from '../../node_modules/@angular/common';
+import { PollService } from './poll.service';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { AsyncPipe } from '../../node_modules/@angular/common';
     //fakeBackendProvider,
     ModalService,
     MessagingService,
-    AsyncPipe
+    AsyncPipe,
+    PollService
   ],
   bootstrap: [AppComponent]
 })
