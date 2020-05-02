@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PrintJob } from '../models/print-job';
 import { ModalService } from '../service/modal.service';
 import { PollService } from '../poll.service';
+import { MessagingService } from '../messaging.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-live-panel',
@@ -15,7 +17,7 @@ export class LivePanelComponent implements OnInit {
   printjobs: PrintJob[];
   currentPrintJob: PrintJob;
 
-  constructor(private modalService: ModalService, private poll:PollService) { 
+  constructor(private modalService: ModalService, private poll: PollService, private messagingService: MessagingService ) { 
     this.printjobs = [{"id":1,"username":"sam","docname":"testdoc","color":"black"},{"id":2,"username":"pro","docname":"testdoc2","color":"clr"}]
 
   }
@@ -25,7 +27,15 @@ export class LivePanelComponent implements OnInit {
     let pollSubscription$ =  this.poll.getPrintJobPoll();
     let pollError$ = this.poll.getErrorState();
     pollError$.subscribe(data => console.log('Error state', data));
-    pollSubscription$.subscribe(data => {console.log(data/*.content*/); pollError$.next(false);},error => console.log('Error'));
+    let pollsubs = pollSubscription$.subscribe(data => {console.log(data/*.content*/); pollError$.next(false);},error => console.log('Error'));
+    let notiPermission$ = this.messagingService.getNotiPermission();
+    notiPermission$.pipe(take(1)).subscribe(data => {
+      if(data){
+        pollsubs.unsubscribe();
+      }else{
+        console.log('Notification disabled!');
+      }
+    });
   }
 
   openModal(id: string, idx: number) {

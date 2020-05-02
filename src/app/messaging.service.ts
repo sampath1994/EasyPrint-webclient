@@ -14,6 +14,7 @@ export class MessagingService {
   /*currentMessage = new BehaviorSubject<any>(null);
   data = this.currentMessage.asObservable();*/
   currentMessage = new Subject<any>();
+  private notiPermission = new Subject<boolean>();
 
   constructor(
     private angularFireDB: AngularFireDatabase,
@@ -54,8 +55,10 @@ export class MessagingService {
         console.log(token);
         console.log('Here');
         this.updateToken(userId, token);
+        this.notiPermission.next(true);
       },
       (err) => {
+        this.notiPermission.next(false);
         console.error('Unable to get permission to notify.', err);
       }
     );
@@ -70,5 +73,9 @@ export class MessagingService {
         console.log("new message received. ", payload);
         this.currentMessage.next(payload);
       })
+  }
+
+  getNotiPermission(): Subject<boolean>{
+    return this.notiPermission;
   }
 }
