@@ -4,7 +4,7 @@
 <div>
 <ul>
 <li *ngFor="let job of printjobs; index as i">
-<button class='btn btn-primary btn-lg' (click)="openModal('custom-modal-2', i)">{{job.username}}</button>
+<button class='btn btn-primary btn-lg' (click)="openModal('custom-modal-2', i)">{{job.ref_no}}</button>
   </li>
 </ul>
 
@@ -18,10 +18,16 @@
   <button (click)="closeModal('custom-modal-1');">Close</button>
 </jw-modal>
 
-<jw-modal id="custom-modal-2">
+<jw-modal  id="custom-modal-2">
   <h1 style="height:300px">Print properties</h1>
-  <p>{{currentPrintJob.username}}</p>
-  <p>{{currentPrintJob.docname}}</p>
+  <div *ngIf="currentPrintJob">
+  <p>{{currentPrintJob.client_id}}</p>
   <p>{{currentPrintJob.color}}</p>
+  <p>{{currentPrintJob.document_id}}</p>
+  <p>{{currentPrintJob.download_link}}</p>
+  <p>{{currentPrintJob.ref_no}}</p>
+  <p>{{currentPrintJob.side}}</p>
+  <p>{{currentPrintJob.status}}</p>
+  </div>  
   <button (click)="closeModal('custom-modal-2');">Close</button>
 </jw-modal>
