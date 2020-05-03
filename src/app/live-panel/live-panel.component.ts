@@ -35,6 +35,12 @@ export class LivePanelComponent implements OnInit {
     notiPermission$.pipe(take(1)).subscribe(data => {
       if(data){
         pollsubs.unsubscribe();
+        this.messagingService.currentMessage.subscribe((val) => {
+          console.log("inside subscribe");
+          console.log(val.notification.title);
+          console.log(val.notification.body);
+          this.getPrintJobsOnNoti();
+        });
       }else{
         console.log('Notification disabled!');
       }
@@ -51,7 +57,6 @@ closeModal(id: string) {
 }
 
 currentLivePanelDataExtract(pageInfo: any){
-  console.log(pageInfo);
   let pageArray = pageInfo.content;
   this.totalElements = pageInfo.totalElements;
   this.totalPages = pageInfo.totalPages;
@@ -62,5 +67,13 @@ currentLivePanelDataExtract(pageInfo: any){
     console.log(printj);
     this.printjobs.push(printj);  
   }
+}
+
+getPrintJobsOnNoti(){
+  this.poll.getPrintJobs().subscribe(data => {
+    this.currentLivePanelDataExtract(data);
+  },
+  error => console.log('Error while polling!')
+  )
 }
 }

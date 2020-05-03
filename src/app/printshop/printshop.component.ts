@@ -17,11 +17,7 @@ export class PrintshopComponent implements OnInit {
     this.messagingService.receiveMessage()
     /*this.message = this.messagingService.currentMessage
     console.log(this.message);*/
-    this.messagingService.currentMessage.subscribe((val) => {
-      console.log("inside subscribe");
-      console.log(val.notification.title);
-      console.log(val.notification.body);
-    });
+    
   }
 
 }

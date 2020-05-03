@@ -26,6 +26,10 @@ export class PollService {
       );
   }
 
+  getPrintJobs(): Observable<any>{
+    return this.http.get(`${environment.apiUrl}/doc/poll/${this.pageNo}`);
+  }
+
   getErrorState(): Subject<boolean>{
     return this.errorState;
   }
