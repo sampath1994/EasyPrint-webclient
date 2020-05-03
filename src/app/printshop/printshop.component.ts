@@ -8,16 +8,12 @@ import { MessagingService } from '../messaging.service';
 })
 export class PrintshopComponent implements OnInit {
 
-  message;
   constructor(private messagingService: MessagingService) { }
 
   ngOnInit() {
     const userId = 'user001';
-    this.messagingService.requestPermission(userId)
-    this.messagingService.receiveMessage()
-    /*this.message = this.messagingService.currentMessage
-    console.log(this.message);*/
-    
+    this.messagingService.requestPermission(userId);
+    this.messagingService.receiveMessage();
   }
 
 }
