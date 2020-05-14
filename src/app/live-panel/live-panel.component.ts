@@ -3,7 +3,8 @@ import { PrintJob } from '../models/print-job';
 import { ModalService } from '../service/modal.service';
 import { PollService } from '../poll.service';
 import { MessagingService } from '../messaging.service';
-import { take } from 'rxjs/operators';
+import { take, delay } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-live-panel',
@@ -20,6 +21,8 @@ export class LivePanelComponent implements OnInit {
   private totalPages: number;
   private currentPage: number;
 
+  private notiPermissionSubscription: Subscription;
+
   constructor(private modalService: ModalService, private poll: PollService, private messagingService: MessagingService ) { 
     //this.printjobs = [{"id":1,"username":"sam","docname":"testdoc","color":"black"},{"id":2,"username":"pro","docname":"testdoc2","color":"clr"}]
 
@@ -32,7 +35,7 @@ export class LivePanelComponent implements OnInit {
     pollError$.subscribe(data => console.log('Error state', data));
     let pollsubs = pollSubscription$.subscribe(data => {this.currentLivePanelDataExtract(data); pollError$.next(false);},error => console.log('Error'));
     let notiPermission$ = this.messagingService.getNotiPermission();
-    notiPermission$.pipe(take(1)).subscribe(data => {
+    this.notiPermissionSubscription = notiPermission$.pipe(take(1), delay(2000)).subscribe(data => {
       if(data){
         pollsubs.unsubscribe();
         this.messagingService.currentMessage.subscribe((val) => {
@@ -46,6 +49,11 @@ export class LivePanelComponent implements OnInit {
       }
     });
   }
+
+  ngOnDestroy() {
+    this.notiPermissionSubscription.unsubscribe();
+  }
+
 
   openModal(id: string, idx: number) {
     this.currentPrintJob = this.printjobs[idx];
