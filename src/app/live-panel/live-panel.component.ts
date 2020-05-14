@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { PrintJob } from '../models/print-job';
 import { ModalService } from '../service/modal.service';
 import { PollService } from '../poll.service';
@@ -23,6 +23,7 @@ export class LivePanelComponent implements OnInit {
 
   private notiPermissionSubscription: Subscription;
   private pollServiceSubs: Subscription;
+  private onFocusSubs: Subscription;
 
   constructor(private modalService: ModalService, private poll: PollService, private messagingService: MessagingService ) { 
     //this.printjobs = [{"id":1,"username":"sam","docname":"testdoc","color":"black"},{"id":2,"username":"pro","docname":"testdoc2","color":"clr"}]
@@ -54,8 +55,22 @@ export class LivePanelComponent implements OnInit {
   ngOnDestroy() {
     this.notiPermissionSubscription.unsubscribe();
     this.pollServiceSubs.unsubscribe();
+    this.onFocusSubs.unsubscribe();
   }
 
+  @HostListener('window:focus', ['$event'])
+    onFocus(event: any): void {
+        console.log('Focused');
+        this.getPrintJobsOnFocus();
+    }
+
+  getPrintJobsOnFocus(){
+    this.onFocusSubs = this.poll.getPrintJobs().subscribe(data => {
+      this.currentLivePanelDataExtract(data);
+    },
+    error => console.log('Error while polling!')
+    )
+  } 
 
   openModal(id: string, idx: number) {
     this.currentPrintJob = this.printjobs[idx];
