@@ -22,6 +22,7 @@ export class LivePanelComponent implements OnInit {
   private currentPage: number;
 
   private notiPermissionSubscription: Subscription;
+  private pollServiceSubs: Subscription;
 
   constructor(private modalService: ModalService, private poll: PollService, private messagingService: MessagingService ) { 
     //this.printjobs = [{"id":1,"username":"sam","docname":"testdoc","color":"black"},{"id":2,"username":"pro","docname":"testdoc2","color":"clr"}]
@@ -33,11 +34,11 @@ export class LivePanelComponent implements OnInit {
     let pollSubscription$ =  this.poll.getPrintJobPoll();
     let pollError$ = this.poll.getErrorState();
     pollError$.subscribe(data => console.log('Error state', data));
-    let pollsubs = pollSubscription$.subscribe(data => {this.currentLivePanelDataExtract(data); pollError$.next(false);},error => console.log('Error'));
+    this.pollServiceSubs = pollSubscription$.subscribe(data => {this.currentLivePanelDataExtract(data); pollError$.next(false);},error => console.log('Error'));
     let notiPermission$ = this.messagingService.getNotiPermission();
     this.notiPermissionSubscription = notiPermission$.pipe(take(1), delay(2000)).subscribe(data => {
       if(data){
-        pollsubs.unsubscribe();
+        this.pollServiceSubs.unsubscribe();
         this.messagingService.currentMessage.subscribe((val) => {
           console.log("inside subscribe");
           console.log(val.notification.title);
@@ -52,6 +53,7 @@ export class LivePanelComponent implements OnInit {
 
   ngOnDestroy() {
     this.notiPermissionSubscription.unsubscribe();
+    this.pollServiceSubs.unsubscribe();
   }
 
 
