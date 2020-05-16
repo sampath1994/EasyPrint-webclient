@@ -1,5 +1,5 @@
 <p>
-  live-panel works!
+  Current Print Jobs
 </p>
 <div>
 <ul>
@@ -7,7 +7,10 @@
 <button class='btn btn-primary btn-lg' (click)="openModal('custom-modal-2', i)">{{job.ref_no}}</button>
   </li>
 </ul>
-
+<div  class="content">
+  <button class='btn btn-primary btn-lg' (click)="previousClick()" [attr.disabled]="isFirst ? '' : null">previous</button>
+  <button class='btn btn-primary btn-lg' (click)="nextClick()" [attr.disabled]="isLast ? '' : null">next</button>
+  </div>
 </div>
 
 

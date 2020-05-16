@@ -20,6 +20,8 @@ export class LivePanelComponent implements OnInit {
   private totalElements: number;
   private totalPages: number;
   private currentPage: number;
+  private isFirst: boolean;
+  private isLast:boolean;
 
   private notiPermissionSubscription: Subscription;
   private pollServiceSubs: Subscription;
@@ -82,14 +84,17 @@ closeModal(id: string) {
 }
 
 currentLivePanelDataExtract(pageInfo: any){
+  console.log(pageInfo);
   let pageArray = pageInfo.content;
   this.totalElements = pageInfo.totalElements;
   this.totalPages = pageInfo.totalPages;
   this.currentPage = pageInfo.number;
+  this.isFirst = pageInfo.first;
+  this.isLast = pageInfo.last;
   this.printjobs = [];
   for(let idx in pageArray){
     let printj: PrintJob = <PrintJob> pageArray[idx];
-    console.log(printj);
+    //console.log(printj);
     this.printjobs.push(printj);  
   }
 }
@@ -100,5 +105,17 @@ getPrintJobsOnNoti(){
   },
   error => console.log('Error while polling!')
   )
+}
+
+previousClick(){
+  console.log('prev');
+  this.poll.setPageNo(this.currentPage - 1);
+  this.getPrintJobsOnFocus();
+}
+
+nextClick(){
+  console.log('nextt');
+  this.poll.setPageNo(this.currentPage + 1);
+  this.getPrintJobsOnFocus();
 }
 }
