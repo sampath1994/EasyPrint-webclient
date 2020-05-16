@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireMessaging } from '@angular/fire/messaging';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../environments/environment';
 import { mergeMapTo } from 'rxjs/operators';
 import { take } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs'
@@ -19,7 +21,8 @@ export class MessagingService {
   constructor(
     private angularFireDB: AngularFireDatabase,
     private angularFireAuth: AngularFireAuth,
-    private angularFireMessaging: AngularFireMessaging) {
+    private angularFireMessaging: AngularFireMessaging,
+    private http: HttpClient) {
     this.angularFireMessaging.messaging.subscribe(
       (_messaging) => {
         _messaging.onMessage = _messaging.onMessage.bind(_messaging);
@@ -35,13 +38,10 @@ export class MessagingService {
    * @param token token as a value
    */
   updateToken(userId, token) {
-    // we can change this function to request our backend service
-    /*this.angularFireAuth.authState.pipe(take(1)).subscribe(
-      () => {
-        const data = {};
-        data[userId] = token
-        this.angularFireDB.object('fcmTokens/').update(data)
-      })*/
+    this.http.post<any>(`${environment.apiUrl}/users/update_fcm_token?token=${token}`, {}).subscribe(
+      data => {console.log('FCM token update',data)},
+      error =>{console.log('FCM token update Failed')}
+    );
   }
 
   /**
